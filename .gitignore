@@ -1,0 +1,13 @@
+# gradle
+
+/.gradle/
+/build/
+/out/
+
+# fabric
+
+/run/*
+!/run/options.txt
+/run_server/*
+!/run_server/eula.txt
+/minecraft/

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.jimfs:jimfs:1.2-fabric">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.2-fabric/c3705f1acc511edb8ad4fd4e86ae4634a25315bb/jimfs-1.2-fabric.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.2-fabric/d8ff004ab11c47e7f5cd8f896c0454b3cf8e38e2/jimfs-1.2-fabric-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.jimfs/jimfs/1.2-fabric/6cb00cae551b619536022d7725889c7d63b459/jimfs-1.2-fabric-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

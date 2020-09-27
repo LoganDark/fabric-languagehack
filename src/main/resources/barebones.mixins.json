@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "net.logandark.barebones.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [],
+	"client": ["AntiCoronavirus"],
+	"server": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
