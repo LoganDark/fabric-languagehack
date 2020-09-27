@@ -1,37 +1,29 @@
 {
 	"schemaVersion": 1,
-	"id": "barebones",
+	"id": "languagehack",
 	"version": "${version}",
 
-	"name": "Barebones",
-	"description": "Congrats, you made it work!",
+	"name": "LanguageHack",
+	"description": "Loads mod localizations on server",
 	"authors": ["LoganDark"],
 	"contact": {
-		"sources": "https://github.com/LoganDark/fabric-barebones",
-		"website": "https://github.com/LoganDark/fabric-barebones",
-		"issues": "https://github.com/LoganDark/fabric-barebones/issues"
+		"sources": "https://github.com/LoganDark/fabric-languagehack",
+		"website": "https://github.com/LoganDark/fabric-languagehack",
+		"issues": "https://github.com/LoganDark/fabric-languagehack/issues"
 	},
 
 	"custom": {},
 
 	"license": "GPLv3",
-	"icon": "assets/barebones/icon.png",
+	"icon": "assets/languagehack/icon.png",
 
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			{
-				"adapter": "kotlin",
-				"value": "net.logandark.barebones.Barebones"
-			}
-		]
-	},
+	"environment": "server",
+	"entrypoints": {},
 
-	"mixins": ["barebones.mixins.json"],
+	"mixins": ["languagehack.mixins.json"],
 
 	"depends": {
 		"fabricloader": ">=0.8.8",
-		"fabric-language-kotlin": ">=1.3.71+build.1",
 		"minecraft": "1.16.x"
 	},
 	"suggests": {}

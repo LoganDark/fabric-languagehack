@@ -10,8 +10,7 @@ pluginManagement {
 
 	plugins {
 		id 'fabric-loom' version loom_version
-		id 'org.jetbrains.kotlin.jvm' version kotlin_version
 	}
 }
 
-rootProject.name = 'barebones'
+rootProject.name = 'languagehack'

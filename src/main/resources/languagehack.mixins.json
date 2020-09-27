@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "net.logandark.languagehack.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [],
+	"client": [],
+	"server": ["MixinLanguage", "MixinTranslatableText", "MixinTextSerializer"],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
