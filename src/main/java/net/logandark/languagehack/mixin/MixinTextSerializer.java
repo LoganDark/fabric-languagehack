@@ -31,7 +31,7 @@ public abstract class MixinTextSerializer {
 	) {
 		if (text instanceof SSTranslatableText) {
 			cir.setReturnValue(serialize(
-				((SSTranslatableText) text).toLiteralText(true),
+				((SSTranslatableText) text).toLiteralText(),
 				LiteralText.class,
 				ctx
 			));

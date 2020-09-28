@@ -55,27 +55,20 @@ public class SSTranslatableText extends TranslatableText {
 	/**
 	 * Converts this {@link SSTranslatableText} into a {@link LiteralText}.
 	 * <p>
-	 * Only converts nested {@link SSTranslatableText}s if {@code nested} is
-	 * {@code true}.
+	 * Does not convert nested {@link SSTranslatableText}s.
 	 *
 	 * @return A {@link LiteralText} that looks identical to this {@link
 	 * SSTranslatableText}. All contained components are copied via {@link
 	 * Text#shallowCopy()}.
 	 */
-	public LiteralText toLiteralText(boolean nested) {
+	public LiteralText toLiteralText() {
 		LiteralText literalText = new LiteralText("");
 		literalText.setStyle(getStyle());
 
 		for (StringVisitable translation : getTranslations()) {
-			Text text;
-
-			if (nested && translation instanceof SSTranslatableText) {
-				text = ((SSTranslatableText) translation).toLiteralText(true);
-			} else {
-				text = translation instanceof Text
-					? ((Text) translation).shallowCopy()
-					: new LiteralText(translation.getString());
-			}
+			Text text = translation instanceof Text
+				? ((Text) translation).shallowCopy()
+				: new LiteralText(translation.getString());
 
 			literalText.append(text);
 		}
