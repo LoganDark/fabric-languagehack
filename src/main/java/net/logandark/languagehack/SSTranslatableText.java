@@ -1,14 +1,13 @@
 package net.logandark.languagehack;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.bridge.game.Language;
 import net.logandark.languagehack.mixin.MixinTranslatableText;
-import net.logandark.languagehack.ducks.TextSerializerDuck;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.StringVisitable;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+
+import java.util.List;
 
 /**
  * This subclass of {@link TranslatableText} translates itself on the server
@@ -19,55 +18,73 @@ import net.minecraft.text.TranslatableText;
  * localizations being available on the server. However, once localizations are
  * available, {@link SSTranslatableText} becomes useful for server-sided mods
  * that don't require the client to install anything, Bukkit plugin-style.
+ * <p>
+ * Unlike normal {@link TranslatableText}s, {@link SSTranslatableText}s are only
+ * accurate upon creation. When they are saved to file or sent over the network,
+ * they become a {@link LiteralText}.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class SSTranslatableText extends TranslatableText {
+	private MixinTranslatableText mixin = (MixinTranslatableText) this;
+
 	public SSTranslatableText(String key, Object... args) {
 		super(key, args);
+		updateTranslations();
 	}
 
 	public SSTranslatableText(String key) {
 		super(key);
+		updateTranslations();
 	}
 
-	public JsonObject serialize(
-		Text.Serializer serializer,
-		JsonSerializationContext ctx
-	) {
-		MixinTranslatableText mixin = (MixinTranslatableText) this;
-
+	private void updateTranslations() {
 		mixin.languagehack$updateTranslations();
+	}
 
-		JsonObject jsonObject = new JsonObject();
-		TextSerializerDuck betterSerializer = (TextSerializerDuck) serializer;
+	/**
+	 * @return The list of translations stored within this {@link
+	 * SSTranslatableText}. It basically consists of the translation obtained
+	 * from the {@link Language}, but with format specifiers replaced with
+	 * either blanks or the arguments passed to the {@link SSTranslatableText}'s
+	 * constructor.
+	 */
+	public List<StringVisitable> getTranslations() {
+		return mixin.languagehack$getTranslations();
+	}
 
-		jsonObject.addProperty("text", "");
+	/**
+	 * Converts this {@link SSTranslatableText} into a {@link LiteralText}.
+	 * <p>
+	 * Only converts nested {@link SSTranslatableText}s if {@code nested} is
+	 * {@code true}.
+	 *
+	 * @return A {@link LiteralText} that looks identical to this {@link
+	 * SSTranslatableText}. All contained components are copied via {@link
+	 * Text#shallowCopy()}.
+	 */
+	public LiteralText toLiteralText(boolean nested) {
+		LiteralText literalText = new LiteralText("");
+		literalText.setStyle(getStyle());
 
-		Style style = getStyle();
+		for (StringVisitable translation : getTranslations()) {
+			Text text;
 
-		if (!style.isEmpty()) {
-			betterSerializer.languagehack$addStyle(style, jsonObject, ctx);
-		}
-
-		JsonArray extra = new JsonArray();
-
-		for (StringVisitable translation : mixin.languagehack$getTranslations()) {
-			if (translation instanceof Text) {
-				extra.add(serializer.serialize((Text) translation, translation.getClass(), ctx));
+			if (nested && translation instanceof SSTranslatableText) {
+				text = ((SSTranslatableText) translation).toLiteralText(true);
 			} else {
-				extra.add(translation.getString());
+				text = translation instanceof Text
+					? ((Text) translation).shallowCopy()
+					: new LiteralText(translation.getString());
 			}
+
+			literalText.append(text);
 		}
 
-		for (Text sibling : getSiblings()) {
-			extra.add(serializer.serialize(sibling, sibling.getClass(), ctx));
+		for (Text sibling : siblings) {
+			literalText.append(sibling.shallowCopy());
 		}
 
-		if (extra.size() > 0) {
-			jsonObject.add("extra", extra);
-		}
-
-		return jsonObject;
+		return literalText;
 	}
 
 	@Override
