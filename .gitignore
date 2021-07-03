@@ -3,6 +3,7 @@
 /.gradle/
 /build/
 /out/
+/bin/
 
 # fabric
 
@@ -11,3 +12,11 @@
 /run_server/*
 !/run_server/eula.txt
 /minecraft/
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+.classpath
+.project
