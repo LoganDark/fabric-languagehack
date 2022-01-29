@@ -35,5 +35,5 @@ bin/
 /run/*
 !/run/options.txt
 /run_server/*
-!/run_server/eula.txt
+!/run/eula.txt
 /minecraft/
