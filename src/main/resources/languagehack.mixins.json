@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"package": "net.logandark.languagehack.mixin",
-	"compatibilityLevel": "JAVA_16",
+	"compatibilityLevel": "JAVA_17",
 	"mixins": [],
 	"client": [],
 	"server": ["MixinLanguage", "MixinTranslatableText", "MixinTextSerializer"],
