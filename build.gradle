@@ -10,7 +10,11 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-minecraft {}
+loom {
+	//clientOnlyMinecraftJar()
+	//serverOnlyMinecraftJar()
+	runtimeOnlyLog4j = true
+}
 
 repositories {
 	maven { url = 'https://maven.fabricmc.net/' }
@@ -57,14 +61,7 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
+			from components.java
 		}
 	}
 
